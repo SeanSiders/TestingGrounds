@@ -9,10 +9,10 @@
 AGun::AGun()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-    
+    PrimaryActorTick.bCanEverTick = true;
     // Create a gun mesh component
     Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
+    SetRootComponent(Gun);
     Gun->bCastDynamicShadow = false;
     Gun->CastShadow = false;
     // Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
@@ -29,8 +29,10 @@ AGun::AGun()
 // Called when the game starts or when spawned
 void AGun::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
+    
 }
+
 void AGun::OnFire()
 {
     // try and fire a projectile
@@ -68,5 +70,3 @@ void AGun::OnFire()
         }
     }
 }
-
-

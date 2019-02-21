@@ -42,13 +42,6 @@ AFirstPersonCharacter::AFirstPersonCharacter()
 
 	// Note: The ProjectileClass and the skeletal mesh/anim blueprints for Mesh1P, Gun, and VR_Gun 
 	// are set in the derived blueprint asset named MyCharacter to avoid direct content references in C++.
-
-	// Create VR Controllers.
-	R_MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("R_MotionController"));
-	R_MotionController->MotionSource = FXRMotionControllerBase::RightHandSourceId;
-	R_MotionController->SetupAttachment(RootComponent);
-	L_MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("L_MotionController"));
-	L_MotionController->SetupAttachment(RootComponent);
 }
 
 void AFirstPersonCharacter::BeginPlay()
@@ -63,9 +56,15 @@ void AFirstPersonCharacter::BeginPlay()
     }
     
     Gun = GetWorld()->SpawnActor<AGun>(Gun_BP);
-
+    Gun->AnimInstance = Mesh1P->GetAnimInstance();
     //Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
     Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+    
+    if (InputComponent)
+    {
+        // Bind fire event
+        InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,9 +78,6 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	// Bind jump events
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
-	// Bind fire event
-	//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AGun::OnFire);
 
 	// Bind movement events
 	PlayerInputComponent->BindAxis("MoveForward", this, &AFirstPersonCharacter::MoveForward);
