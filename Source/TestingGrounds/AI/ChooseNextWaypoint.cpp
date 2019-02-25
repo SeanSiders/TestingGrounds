@@ -15,10 +15,11 @@ EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent& Own
     
     // get the array that contains the set patrol points
     auto PatrolPoints = PatrolRoute->GetPatrolPoints();
+    
     if (PatrolPoints.Num() == 0)
     {
         UE_LOG(LogTemp, Warning, TEXT("A guard has no patrol points"))
-        EBTNodeResult::Failed;
+        return EBTNodeResult::Failed;
     }
     
     // get reference to the blackboard created in UE editor

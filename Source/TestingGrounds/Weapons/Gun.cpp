@@ -16,7 +16,7 @@ AGun::AGun()
     Gun->bCastDynamicShadow = false;
     Gun->CastShadow = false;
     // Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
-    Gun->SetupAttachment(RootComponent);
+    // Gun->SetupAttachment(RootComponent);
     
     MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
     MuzzleLocation->SetupAttachment(Gun);
@@ -35,6 +35,7 @@ void AGun::BeginPlay()
 
 void AGun::OnFire()
 {
+    UE_LOG(LogTemp, Warning, TEXT("Fire"))
     // try and fire a projectile
     if (ProjectileClass != NULL)
     {
