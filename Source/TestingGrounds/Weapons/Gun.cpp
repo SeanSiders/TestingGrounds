@@ -4,6 +4,7 @@
 #include "Projectiles/BallProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "../Character/Mannequin.h"
 
 // Sets default values
 AGun::AGun()
@@ -15,8 +16,6 @@ AGun::AGun()
     SetRootComponent(Gun);
     Gun->bCastDynamicShadow = false;
     Gun->CastShadow = false;
-    // Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
-    // Gun->SetupAttachment(RootComponent);
     
     MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
     MuzzleLocation->SetupAttachment(Gun);
@@ -35,7 +34,6 @@ void AGun::BeginPlay()
 
 void AGun::OnFire()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Fire"))
     // try and fire a projectile
     if (ProjectileClass != NULL)
     {

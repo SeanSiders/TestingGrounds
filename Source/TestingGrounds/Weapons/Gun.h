@@ -39,7 +39,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
     class UAnimMontage* FireAnimation;
     
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
     class UAnimInstance* AnimInstance;
     
     /** Fires a projectile. */
@@ -49,4 +49,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+    
+private:
+    class AMannequin* Mannequin;
 };
